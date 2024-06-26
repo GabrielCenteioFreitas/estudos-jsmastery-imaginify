@@ -28,7 +28,7 @@ export const MediaUploader = ({
       publicId: result?.info?.public_id,
       width: result?.info?.width,
       height: result?.info?.height,
-      secureUrl: result?.info?.secure_url,
+      secureURL: result?.info?.secure_url,
     }))
 
     onValueChange(result?.info?.public_id)
@@ -77,7 +77,6 @@ export const MediaUploader = ({
                 placeholder={dataUrl as PlaceholderValue}
                 className="media-uploader_cldImage"
               />
-
             </div>
           ) : (
             <div className="media-uploader_cta" onClick={() => open()}>
