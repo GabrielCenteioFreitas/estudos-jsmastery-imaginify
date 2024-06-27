@@ -1,6 +1,6 @@
 interface HeaderProps {
   title: string;
-  subtitle: string;
+  subtitle?: string;
 }
 
 export const Header = ({ title, subtitle }: HeaderProps) => {

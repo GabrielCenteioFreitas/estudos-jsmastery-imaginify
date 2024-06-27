@@ -152,9 +152,9 @@ export const TransformationForm = ({ action, data=null, userId, type, creditBala
           [fieldName === 'prompt' ? 'prompt' : 'to']: value,
         }
       }))
+    }, 1000)()
 
-      return onChangeField(value)
-    }, 1000)
+    return onChangeField(value)
   } 
 
   const onTransformHandler = async () => {
@@ -209,6 +209,7 @@ export const TransformationForm = ({ action, data=null, userId, type, creditBala
             render={({ field }) =>
               <Select
                 onValueChange={(value) => onSelectFieldHandler(value, field.onChange)}
+                value={field.value}
               >
                 <SelectTrigger className="select-field">
                   <SelectValue placeholder="Select size" />
@@ -235,7 +236,7 @@ export const TransformationForm = ({ action, data=null, userId, type, creditBala
                   ? 'Object to remove'
                   : 'Object to recolor'
               }
-              render={(({ field }) => (
+              render={({ field }) => (
                 <Input
                   value={field.value}
                   className="input-field"
@@ -246,7 +247,7 @@ export const TransformationForm = ({ action, data=null, userId, type, creditBala
                     field.onChange,
                   )}
                 />
-              ))}
+              )}
             />
 
             {type === 'recolor' && (

@@ -1,7 +1,10 @@
-import { dataUrl, debounce, getImageSize } from "@/lib/utils";
-import { CldImage } from "next-cloudinary";
+"use client"
+
+import { dataUrl, debounce, download, getImageSize } from "@/lib/utils";
+import { CldImage, getCldImageUrl } from "next-cloudinary";
 import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
+import { MouseEvent } from "react";
 
 export const TransformedImage = ({
   image,
@@ -12,8 +15,15 @@ export const TransformedImage = ({
   setIsTransforming,
   hasDownload = false,
 }: TransformedImageProps) => {
-  const downloadHandler = () => {
+  const downloadHandler = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
 
+    download(getCldImageUrl({
+      width: image?.width,
+      height: image?.height,
+      src: image?.publicId,
+      ...transformationConfig
+    }), title)
   }
 
   return (
@@ -52,7 +62,7 @@ export const TransformedImage = ({
             onError={() => {
               debounce(() => {
                 setIsTransforming && setIsTransforming(false)
-              }, 8000)
+              }, 8000)()
             }}
             {...transformationConfig}
           />
@@ -61,10 +71,13 @@ export const TransformedImage = ({
             <div className="transforming-loader">
               <Image
                 src='/assets/icons/spinner.svg'
-                alt="Transforming"
+                alt="spinner"
                 width={50}
                 height={50}
               />
+              <p className="text-white/80">
+                Please wait...
+              </p>
             </div>
           )}
         </div>
